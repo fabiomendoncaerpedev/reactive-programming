@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Item, LivrosResultados } from './../models/interfaces';
 
@@ -16,9 +16,7 @@ export class LivroService {
     const params = new HttpParams().append('q', valorDigitado);
 
     return this.http.get<LivrosResultados>(this.API, { params }).pipe(
-      tap(response => console.log('Fluxo do Tap', response)),
       map(response => response.items),
-      tap(response => console.log('Fluxo após o map', response))
     );
   }
 
