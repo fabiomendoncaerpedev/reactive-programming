@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Item, LivrosResultados } from './../models/interfaces';
+import { Observable } from 'rxjs';
+import { LivrosResultados } from './../models/interfaces';
 
 @Injectable()
 export class LivroService {
@@ -12,12 +12,10 @@ export class LivroService {
     private http: HttpClient
   ) { }
 
-  buscar(valorDigitado: string): Observable<Array<Item>> {
+  buscar(valorDigitado: string): Observable<LivrosResultados> {
     const params = new HttpParams().append('q', valorDigitado);
 
-    return this.http.get<LivrosResultados>(this.API, { params }).pipe(
-      map(response => response.items),
-    );
+    return this.http.get<LivrosResultados>(this.API, { params });
   }
 
 }
