@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { catchError, debounceTime, distinctUntilChanged, EMPTY, filter, map, switchMap, tap, throwError, of } from 'rxjs';
 import { FormControl } from '@angular/forms';
+import { catchError, debounceTime, distinctUntilChanged, filter, map, switchMap, tap, throwError } from 'rxjs';
 import { LivroService } from './../../services/livro.service';
-import { Item, Livro, LivrosResultados } from 'src/app/models/interfaces';
+import { Item, Livro } from 'src/app/models/interfaces';
 import { LivroVolumeInfo } from 'src/app/models/livroVolumeInfo';
 
 const PAUSA = 300;
@@ -51,16 +51,26 @@ export class ListaLivrosComponent {
         (erro) => {
           this.mensagemErro = 'Ops ocorreu um erro. Recarregue a aplicação'
 
-          return EMPTY;
+          return throwError(
+            () => console.log(erro)
+          );
         }
       )
     )
 
   parseLivrosResultadosParaLivros(items: Array<Item>): Array<LivroVolumeInfo> {
-    return items.map((item) => new LivroVolumeInfo(item));
+
+    console.log('valor antes de parsear', items);
+
+    const ret = items.map((item) => {
+      console.log('valor durante o parser', item)
+
+      return new LivroVolumeInfo(item);
+    })
+
+    console.log('valor parseado', ret);
+
+    return ret;
   }
 
 }
-
-
-
