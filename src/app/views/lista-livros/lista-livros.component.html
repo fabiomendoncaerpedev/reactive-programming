@@ -21,9 +21,14 @@
     *ngIf="livrosEncontrados$ | async"
     class="resultados">{{ qtdLivros }} resultados encontrados
   </div>
-<div class="container-card" *ngIf="livrosEncontrados$ | async as listaLivros, else telaInicial">
+<div
+  class="container-card"
+  *ngIf="livrosEncontrados$ | async as listaLivros, else telaInicial"
+  [@listBookAnimation]="livrosEncontrados$">
   <div *ngFor="let livro of listaLivros">
-    <app-livro [livro]="livro"></app-livro>
+    <app-livro
+      [livro]="livro">
+    </app-livro>
   </div>
 </div>
 <ng-template #telaInicial>
